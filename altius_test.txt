@@ -1,0 +1,82 @@
+//merge k sorted list
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+	    Scanner sc=new Scanner(System.in);
+	    // i have took the input as an 2D Array
+		int n=sc.nextInt();//this takes input for number of rows
+		int m=sc.nextInt();//this takes input for no of col]
+		ArrayList<ArrayList<Integer>> li=new ArrayList<>();
+		int[][] arr=new int[n][m];
+		for(int i=0;i<n;i++)
+		{
+		    for(int j=0;j<m;j++)
+		    {
+		        arr[i][j]=sc.nextInt();
+		    }
+		}
+		//intuition:I will take a priority Queue with all the first elements of the each row sorted in ascending order along with ele ans its x,y cordinates from the arr defined
+		PriorityQueue<int[]> pq=new PriorityQueue<>((a,b)->a[0]-b[0]);
+		for(int i=0;i<n;i++){
+		    pq.add(new int[]{arr[i][0],i,0});
+		}
+		ArrayList<Integer> ans=new ArrayList<>();
+		while(!pq.isEmpty())
+		{
+		    int[] curr=pq.poll();
+		    ans.add(curr[0]);
+		    int x=curr[1];
+		    int y=curr[2];
+		    if(y+1<m)
+		    pq.add(new int[]{arr[x][y+1],x,y+1});
+		}
+		System.out.println(ans);
+		
+	}
+}
+
+
+//median - question
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+	    Scanner sc=new Scanner(System.in);
+	    int n=sc.nextInt();//takes input for length of ArrayList
+	    int k=sc.nextInt();//takes windoe size as input
+	    int[] arr=new int[n];
+	    for(int i=0;i<n;i++)arr[i]=sc.nextInt();
+	    //brute force
+	    ArrayList<Integer> ans=new ArrayList<>();
+	    for(int i=0;i<n;i++)
+	    {
+	        if(i+k<n)//if the window is in the range of n
+	        {
+	            int[] temp=new int[k];
+	            int gg=0;
+	            
+	            for(int j=i;j<i+k;j++)
+	            {
+	                temp[gg]=arr[j];
+	                gg++;
+	            }
+	            Arrays.sort(temp);
+	            if(k%2==0)
+	            {
+	                
+	                int ele1=temp[k/2];
+	                int ele2=temp[(k/2)-1];
+	                //ave of ele1 and ele2 will be median
+	                ans.add((ele1+ele2)/2);
+	            }
+	            else{
+	                //directly the middle ele will be median
+	                ans.add(temp[k/2]);
+	            }
+	        }
+	    }
+	    System.out.println(ans);
+	}
+    
+}
